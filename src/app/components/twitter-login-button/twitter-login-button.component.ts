@@ -20,17 +20,19 @@ export class TwitterLoginButtonComponent implements OnInit {
   ngOnInit() {
     this.authentication.checkAuth()
     // console.log(this.authentication.getUser())
-    // this.getAuthRedirectResult()
+    this.getAuthRedirectResult()
   }
 
   login = () => {
     this.authentication.TwitterAuth()
-    .then((result) => {
-      console.log(result)
-      this.router.navigate(["home"])
-    }).catch((error) => {
-      console.log(error)
-    })
+
+    // this.authentication.TwitterAuth()
+    // .then((result) => {
+    //   console.log(result)
+    //   this.router.navigate(["home"])
+    // }).catch((error) => {
+    //   console.log(error)
+    // })
   }
 
   getAuthRedirectResult = () => {

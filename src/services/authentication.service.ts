@@ -14,8 +14,8 @@ export class AuthenticationService {
 
   // Sign in with Twitter
   public TwitterAuth = () => {
-    // this.afAuth.signInWithRedirect(new firebase.auth.TwitterAuthProvider())
-    return this.afAuth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
+    this.afAuth.signInWithRedirect(new firebase.auth.TwitterAuthProvider())
+    // return this.afAuth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
   }
   public AuthResult = () => {
     return this.afAuth.getRedirectResult()
@@ -32,6 +32,7 @@ export class AuthenticationService {
         // Already signed in.
         localStorage.user = user
         console.log("loged in")
+        this.router.navigate(["home"])
       } else {
         // not signed in.
         console.log("not loged in")
