@@ -1,0 +1,10 @@
+<ng-container *ngIf="!timer_flag">
+  <div class="inline-block ion-padding" (click)="startTimer()">
+    <ion-button>スタート</ion-button>
+  </div>
+</ng-container>
+<ng-container *ngIf="timer_flag">
+  <div class="inline-block ion-padding" (click)="stopTimer()">
+    <ion-button color="secondary" fill="outline">休憩する</ion-button>
+  </div>
+</ng-container>

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ModalEnterPage } from 'src/app/modals/modal-enter/modal-enter.page';
 import { async } from '@angular/core/testing';
+import { GlobalService } from './global.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class AuthenticationService {
     public afAuth: AngularFireAuth,
     private router: Router,
     private modalController: ModalController,
+    private gs: GlobalService,
   ) {}
 
   // Sign in with Twitter
@@ -58,11 +60,12 @@ export class AuthenticationService {
         localStorage.user = user
         localStorage.displayName = user["multiFactor"]["user"]["providerData"][0]["displayName"]
         localStorage.uid = user["multiFactor"]["user"]["providerData"][0]["uid"]
-        console.log(user["multiFactor"]["user"]["providerData"].length)
         let exist_flag: Boolean = false
         for (let i = 0; i < open.length; i++) {
           if (open[i]["user_id"] == localStorage.uid) {
             exist_flag = true
+            localStorage.content = open[i]["content"]
+            localStorage.count = open[i]["count"]
             break
           }
         }
