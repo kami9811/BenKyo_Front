@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { GlobalService } from 'src/services/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal-enter',
@@ -16,6 +17,7 @@ export class ModalEnterPage implements OnInit {
   constructor(
     public modalController: ModalController,
     private gs: GlobalService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -38,6 +40,7 @@ export class ModalEnterPage implements OnInit {
   dismiss = () => {
     localStorage.room_flag = undefined
     this.modalController.dismiss()
+    this.router.navigate(['/home'])
   }
 
 }

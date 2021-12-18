@@ -21,7 +21,8 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    if (localStorage.room_flag !== undefined) this.router.navigate(['/room', localStorage.room_flag])
+    console.log(localStorage.room_flag)
+    if (localStorage.room_flag !== 'undefined') this.router.navigate(['/room', localStorage.room_flag])
   }
 
   openModal = async() => {

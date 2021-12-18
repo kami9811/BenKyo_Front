@@ -28,6 +28,8 @@ export class RoomPage implements OnInit {
 
   ownInformation: [Number, string] = [0, ""]
 
+  room_status: string
+
   constructor(
     public gs: GlobalService,
     public authentication: AuthenticationService,
@@ -69,7 +71,8 @@ export class RoomPage implements OnInit {
     this.gs.httpGet(environment.url + "room/" + this.room_id).subscribe(
       res => {
         console.log(res)
-        // console.log(res["open"].length)
+        if ((res["status"] == 'closed') && (localStorage.room_flag !== 'undefined')) this.closeHistory()
+
         // ルームメイトの内容確認
         for (let i = 0; i < res["open"].length; i++) {
           if (res["open"][i]["user_id"] == localStorage.uid) {
@@ -128,6 +131,33 @@ export class RoomPage implements OnInit {
   onStop(event) {
     this.timer.stopTimer()
     clearInterval(this.interval)
+  }
+
+  closeStudy = () => {
+    if (localStorage.host_user_id == localStorage.uid) this.closeRoom()
+    else this.closeHistory()
+  }
+
+  closeRoom = () => {
+    localStorage.room_flag = undefined
+    const body = {
+      "user_id": localStorage.uid,
+      "count": localStorage.count
+    }
+    this.gs.http(environment.url + "room/" + this.room_id + "/close", body).subscribe(
+      res => this.router.navigate(['/home'])
+    )
+  }
+
+  closeHistory = () => {
+    localStorage.room_flag = undefined
+    const body = {
+      "user_id": localStorage.uid,
+      "count": localStorage.count
+    }
+    this.gs.http(environment.url + "history/" + this.room_id + "/close", body).subscribe(
+      res => this.router.navigate(['/home'])
+    )
   }
 
 }
