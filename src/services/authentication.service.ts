@@ -23,10 +23,10 @@ export class AuthenticationService {
 
   public AuthLogout = () => {
     this.afAuth.signOut()
-    this.router.navigate
+    // this.router.navigate(['/login'])
   }
 
-  public checkAuth = () => {
+  public checkAuth = (page) => {
     this.afAuth.onAuthStateChanged(((user) => {
       if (user) {
         // Already signed in.
@@ -36,11 +36,11 @@ export class AuthenticationService {
         console.log(user["multiFactor"]["user"]["providerData"][0]["displayName"])
         console.log(user["multiFactor"]["user"]["providerData"][0]["uid"])
         console.log("loged in")
-        this.router.navigate(["home"])
+        if (page != "home") this.router.navigate(["home"])
       } else {
         // not signed in.
         console.log("not loged in")
-        this.router.navigate(["/login"])
+        if (page == "home") this.router.navigate(["/login"])
       }
     }))
   }

@@ -20,10 +20,10 @@ export class TwitterLoginButtonComponent implements OnInit {
   waiting: any
 
   ngOnInit() {
-    this.authentication.checkAuth()
+    this.authentication.checkAuth("login")
     // console.log(this.authentication.getUser())
     this.loading()
-    this.getAuthRedirectResult()
+    
   }
 
   login = () => {
@@ -50,6 +50,7 @@ export class TwitterLoginButtonComponent implements OnInit {
       // console.log(result["credential"]["accessToken"])
       // console.log(result["credential"]["secret"])
     }).catch((error) => {
+      // this.waiting.dismiss()
       console.log(error)
     })
   }
@@ -59,7 +60,11 @@ export class TwitterLoginButtonComponent implements OnInit {
       message: `読み込み中...⏳`,
       duration: 10000
     })
-    await this.waiting.present()
+    await this.waiting.present().then(
+      () => {
+        this.getAuthRedirectResult()
+      }
+    )
   }
 
 }

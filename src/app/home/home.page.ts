@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/services/authentication.service';
 import { TweetService } from 'src/services/tweet.service';
 
 @Component({
@@ -10,12 +9,10 @@ import { TweetService } from 'src/services/tweet.service';
 export class HomePage {
 
   constructor(
-    private authentication: AuthenticationService,
     private tweet: TweetService,
   ) {}
 
   ngOnInit() {
-    this.authentication.checkAuth()
     console.log(this.tweet.postTweet(localStorage.name, "勉強"))
   }
 
