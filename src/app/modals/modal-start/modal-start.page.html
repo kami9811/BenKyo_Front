@@ -1,0 +1,18 @@
+<ion-content>
+  <form id="form" (submit)="postTweet()">
+    <div class="input-container">
+      <ion-item>
+        <ion-label class="input-label">勉強内容</ion-label>
+        <ion-input type="text" placeholder="ここに入力してね" [(ngModel)]="content" name="content"></ion-input>
+      </ion-item>
+    </div>
+
+    <div class="button-container">
+      <ion-button type="submit" expand="block">Tweetして部屋を作る</ion-button>
+    </div>
+  </form>
+
+  <div class="button-container">
+    <ion-button class="ion-padding-vertical" expand="block" fill="outline" (click)="dismiss()">閉じる</ion-button>
+  </div>
+</ion-content>

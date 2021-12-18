@@ -19,6 +19,14 @@ const routes: Routes = [
     path: 'room/:room_id',
     loadChildren: () => import('./room/room.module').then( m => m.RoomPageModule)
   },
+  {
+    path: 'modal-start',
+    loadChildren: () => import('./modals/modal-start/modal-start.module').then( m => m.ModalStartPageModule)
+  },
+  {
+    path: 'modal-enter',
+    loadChildren: () => import('./modals/modal-enter/modal-enter.module').then( m => m.ModalEnterPageModule)
+  },
 ];
 
 @NgModule({
