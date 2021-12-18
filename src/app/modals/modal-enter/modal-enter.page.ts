@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { GlobalService } from 'src/services/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal-enter',
@@ -16,14 +17,13 @@ export class ModalEnterPage implements OnInit {
   constructor(
     public modalController: ModalController,
     private gs: GlobalService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
   }
 
   processEnter = () => {
-    console.log(this.host_user_id)
-    console.log(localStorage.uid)
     // 参加者の開始処理
     const body = {
       "user_id": localStorage.uid,
@@ -31,13 +31,14 @@ export class ModalEnterPage implements OnInit {
       "content": this.content
     }
     this.gs.http(environment.url + "history", body).subscribe(
-      res => this.dismiss
+      res => this.dismiss()
     )
   }
 
   dismiss = () => {
     localStorage.room_flag = undefined
     this.modalController.dismiss()
+    this.router.navigate(['/home'])
   }
 
 }
