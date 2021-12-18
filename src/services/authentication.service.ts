@@ -31,6 +31,10 @@ export class AuthenticationService {
       if (user) {
         // Already signed in.
         localStorage.user = user
+        console.log(user)
+        console.log(user["multiFactor"]["user"]["providerData"][0])
+        console.log(user["multiFactor"]["user"]["providerData"][0]["displayName"])
+        console.log(user["multiFactor"]["user"]["providerData"][0]["uid"])
         console.log("loged in")
         this.router.navigate(["home"])
       } else {
