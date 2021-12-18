@@ -12,5 +12,6 @@ export const environment = {
   twitterConfig: {
     "clientId": "RDVtRU93OUZ3RjU5X2tXb3FweW46MTpjaQ",
     "clientSecret": "KDmxozy5_sSj1_p1_q4FxuolzyyM4QFyKa6n1ORPVV3kwNEeSY"
-  }
+  },
+  url: "https://techfusion-studio.com/Oma-Ben/",
 };
