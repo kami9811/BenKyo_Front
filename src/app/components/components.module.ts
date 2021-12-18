@@ -7,11 +7,19 @@ import { MatIconModule } from '@angular/material/icon';
 // Components
 import { TwitterLoginButtonComponent } from './twitter-login-button/twitter-login-button.component';
 import { TwitterLogoutButtonComponent } from './twitter-logout-button/twitter-logout-button.component';
+import { TimerComponent } from './timer/timer.component';
+import { TimerButtonComponent } from './timer-button/timer-button.component';
+import { FruitBasketComponent } from './fruit-basket/fruit-basket.component';
+import { PopoverHintComponent } from './popover-hint/popover-hint.component';
 
 @NgModule({
   declarations: [
     TwitterLoginButtonComponent,
     TwitterLogoutButtonComponent,
+    TimerComponent,
+    TimerButtonComponent,
+    FruitBasketComponent,
+    PopoverHintComponent,
   ],
   imports: [
     CommonModule,
@@ -22,6 +30,10 @@ import { TwitterLogoutButtonComponent } from './twitter-logout-button/twitter-lo
   exports: [
     TwitterLoginButtonComponent,
     TwitterLogoutButtonComponent,
+    TimerComponent,
+    TimerButtonComponent,
+    FruitBasketComponent,
+    PopoverHintComponent,
   ],
 })
 export class ComponentsModule { }
