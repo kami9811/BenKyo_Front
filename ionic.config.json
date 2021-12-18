@@ -1,0 +1,7 @@
+{
+  "name": "Oma-Ben",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
