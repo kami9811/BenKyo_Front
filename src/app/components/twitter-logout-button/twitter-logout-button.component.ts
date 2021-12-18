@@ -12,7 +12,9 @@ export class TwitterLogoutButtonComponent implements OnInit {
     public authentication: AuthenticationService,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authentication.checkAuth()
+  }
 
   logout = () => {
     this.authentication.AuthLogout()
