@@ -24,8 +24,6 @@ export class ModalEnterPage implements OnInit {
   }
 
   processEnter = () => {
-    console.log(this.host_user_id)
-    console.log(localStorage.uid)
     // 参加者の開始処理
     const body = {
       "user_id": localStorage.uid,
@@ -33,7 +31,7 @@ export class ModalEnterPage implements OnInit {
       "content": this.content
     }
     this.gs.http(environment.url + "history", body).subscribe(
-      res => this.dismiss
+      res => this.dismiss()
     )
   }
 
