@@ -30,6 +30,8 @@ export class RoomPage implements OnInit {
 
   room_status: string
 
+  mate
+
   constructor(
     public gs: GlobalService,
     public authentication: AuthenticationService,
@@ -78,6 +80,7 @@ export class RoomPage implements OnInit {
           if (res["open"][i]["user_id"] == localStorage.uid) {
             console.log(res["open"][i])
             this.ownInformation = [res["open"][i]["count"], res["open"][i]["content"]]
+
             break
           }
         }
@@ -98,7 +101,7 @@ export class RoomPage implements OnInit {
         }
         // 部屋確認とログイン確認
         console.log(res)
-        localStorage.host_user_id = res["open"][0]["user_id"]
+        if (res["open"].length > 0) localStorage.host_user_id = res["open"][0]["user_id"]
         if (res["status"] == "open") this.authentication.checkTweetEnter(this.room_id, res["open"])
         else this.alertClosed()
       }
