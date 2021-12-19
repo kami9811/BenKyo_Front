@@ -9,6 +9,8 @@ import { TimerButtonComponent } from '../components/timer-button/timer-button.co
 import { FruitBasketComponent } from '../components/fruit-basket/fruit-basket.component';
 import { ModalController } from '@ionic/angular';
 import { ModalInformationPage } from '../modals/modal-information/modal-information.page';
+import { async } from '@angular/core/testing';
+import { ModalFacegamePage } from '../modals/modal-facegame/modal-facegame.page';
 
 @Component({
   selector: 'app-room',
@@ -208,6 +210,14 @@ export class RoomPage implements OnInit {
         "own_count": this.ownInformation[0],
         "mate_list": this.mate_list,
       }
+    });
+    await modal.present();
+  }
+
+  startFacegame = async() => {
+    const modal = await this.modalController.create({
+      component: ModalFacegamePage,
+      componentProps: {}
     });
     await modal.present();
   }
