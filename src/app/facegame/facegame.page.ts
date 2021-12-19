@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import * as faceapi from 'face-api.js';
-import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-modal-facegame',
-  templateUrl: './modal-facegame.page.html',
-  styleUrls: ['./modal-facegame.page.scss'],
+  selector: 'app-facegame',
+  templateUrl: './facegame.page.html',
+  styleUrls: ['./facegame.page.scss'],
 })
-export class ModalFacegamePage implements OnInit {
+export class FacegamePage implements OnInit {
 
   interval: NodeJS.Timeout
   video: HTMLVideoElement
@@ -42,7 +42,7 @@ export class ModalFacegamePage implements OnInit {
   }
 
   constructor(
-    private modalController: ModalController,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -113,8 +113,8 @@ export class ModalFacegamePage implements OnInit {
   }
 
   dismiss = () => {
-    this.modalController.dismiss()
     this.stream.getTracks().forEach(track => track.stop())
     clearInterval(this.interval)
+    this.router.navigate(['/home'])
   }
 }
