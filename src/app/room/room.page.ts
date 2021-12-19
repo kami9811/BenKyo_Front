@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { GlobalService } from 'src/services/global.service';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -7,6 +7,8 @@ import { environment } from 'src/environments/environment';
 import { TimerComponent } from '../components/timer/timer.component';
 import { TimerButtonComponent } from '../components/timer-button/timer-button.component';
 import { FruitBasketComponent } from '../components/fruit-basket/fruit-basket.component';
+import { ModalController } from '@ionic/angular';
+import { ModalInformationPage } from '../modals/modal-information/modal-information.page';
 
 @Component({
   selector: 'app-room',
@@ -18,8 +20,11 @@ export class RoomPage implements OnInit {
   timer: TimerComponent
   @ViewChild(TimerButtonComponent, {static: false})
   timerButton: TimerButtonComponent
-  @ViewChild(FruitBasketComponent, {static: false})
-  fruitBasket: FruitBasketComponent
+
+  @ViewChild('own')
+  ownFruit: FruitBasketComponent
+  @ViewChildren('mates')
+  mates: QueryList<FruitBasketComponent>
 
   room_id: string = ""
 
@@ -30,7 +35,9 @@ export class RoomPage implements OnInit {
 
   room_status: string
 
-  mate
+  current_mate_list: any[] = []
+  mate_list: any[] = []
+  tmp_list: any[] = []
 
   constructor(
     public gs: GlobalService,
@@ -38,6 +45,7 @@ export class RoomPage implements OnInit {
     private route: ActivatedRoute,
     private alertController: AlertController,
     private router: Router,
+    private modalController: ModalController,
   ) { }
 
   ngOnInit() {
@@ -63,7 +71,7 @@ export class RoomPage implements OnInit {
         }
       )
 
-    }, 20000)
+    }, 5000)
   }
   ionViewDidLeave = () => {
     clearInterval(this.syn_interval)
@@ -78,12 +86,42 @@ export class RoomPage implements OnInit {
         // ルームメイトの内容確認
         for (let i = 0; i < res["open"].length; i++) {
           if (res["open"][i]["user_id"] == localStorage.uid) {
-            console.log(res["open"][i])
+            // console.log(res["open"][i])
             this.ownInformation = [res["open"][i]["count"], res["open"][i]["content"]]
-
+            this.current_mate_list = res["open"].filter(item => (item["user_id"] != localStorage.uid))
             break
           }
         }
+        // current_mate_listから増えてる分を追加
+        // currentをoldで削ったあまりを追加
+        this.tmp_list = this.current_mate_list
+        for (let i = 0; i < this.mate_list.length; i++) this.tmp_list = this.tmp_list.filter(item => (item["user_id"] != this.mate_list[i]["user_id"]))
+        this.mate_list = this.mate_list.concat(this.tmp_list)
+
+        // current_mate_listから減ってる分を減らす
+        // oldをcurrentで削ったあまりを消す
+        // this.tmp_list = this.mate_list
+        // for (let i = 0; i < this.current_mate_list.length; i++) this.tmp_list = this.tmp_list.filter(item => (item["user_id"] != this.mate_list[i]["user_id"]))
+        // this.mate_list = this.mate_list.concat(this.tmp_list)
+
+        console.log(this.mates.toArray())
+        this.mates.toArray().forEach(mate => {
+          console.log(mate)
+          console.log(mate["content"])
+          // mate.addObject(1)
+        })
+
+        // mate_listから逐次current_mate_listを見ていって
+        // 差をcountで見て吐き出す
+        this.mate_list.forEach((mate, index) => {
+          this.current_mate_list.forEach((c_mate) => {
+            if(mate["user_id"] == c_mate["user_id"]) {
+              let diff = c_mate["count"] - mate["count"]
+              console.log(diff)
+              this.mates.toArray()[index].addObject(diff)
+            }
+          })
+        })
       }
     )
   }
@@ -95,7 +133,7 @@ export class RoomPage implements OnInit {
         for (let i = 0; i < res["open"].length; i++) {
           if (res["open"][i]["user_id"] == localStorage.uid) {
             this.ownInformation = [res["open"][i]["count"], res["open"][i]["content"]]
-            this.fruitBasket.addObject(res["open"][i]["count"])
+            this.ownFruit.addObject(res["open"][i]["count"])
             break
           }
         }
@@ -126,7 +164,7 @@ export class RoomPage implements OnInit {
   onStart(event) {
     this.timer.startTimer()
     this.interval = setInterval(() => {
-      this.fruitBasket.addObject(1)
+      this.ownFruit.addObject(1)
       let c: any = parseInt(localStorage.count)
       localStorage.count = c + 1
     }, 10000)
@@ -163,4 +201,14 @@ export class RoomPage implements OnInit {
     )
   }
 
+  getInformation = async() => {
+    const modal = await this.modalController.create({
+      component: ModalInformationPage,
+      componentProps: {
+        "own_count": this.ownInformation[0],
+        "mate_list": this.mate_list,
+      }
+    });
+    await modal.present();
+  }
 }

@@ -54,7 +54,7 @@ export class FruitBasketComponent implements OnInit {
             width: this.width,
             height: this.height,
             wireframes: false,
-            background: 'url(../../../assets/img/low-poly-grid-haikei.png)'
+            background: 'url(../../../assets/img/low-poly-grid-haikei.png)',
         },
     })
 
@@ -99,7 +99,7 @@ export class FruitBasketComponent implements OnInit {
     for (var i = 0; i < fall_num; i++) {
       var rndx = parseInt(String((Math.random() - 0.5) * 10));
       var rndy = parseInt(String((Math.random()) * 10));
-      var x = (this.width/2) + (rndx * (this.width/7.5));
+      var x = (this.width/2) + (rndx * (this.width/6));
       var y = 0 - rndy;
       var kind = parseInt(String(Math.random()*this.cookies.length))
       // var rnd2 = parseInt(String(Math.random() * 320));
@@ -146,8 +146,7 @@ export class FruitBasketComponent implements OnInit {
     await popover.present();
 
     const { role } = await popover.onDidDismiss();
-    // console.log('onDidDismiss resolved with role', role);
+    console.log('onDidDismiss resolved with role', role);
   }
-  closePopover = () => { this.popoverController.dismiss() }
 
 }
