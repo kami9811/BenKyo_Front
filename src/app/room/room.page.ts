@@ -221,4 +221,8 @@ export class RoomPage implements OnInit {
     });
     await modal.present();
   }
+
+  navigateFacegame = () => {
+    this.router.navigate(['/facegame'])
+  }
 }
