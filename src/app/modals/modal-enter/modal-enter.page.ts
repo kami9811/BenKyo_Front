@@ -31,8 +31,12 @@ export class ModalEnterPage implements OnInit {
       "content": this.content
     }
     this.gs.http(environment.url + "history", body).subscribe(
-      res => this.dismiss()
+      res => this.closeModal()
     )
+  }
+
+  closeModal = () => {
+    this.modalController.dismiss()
   }
 
   dismiss = () => {

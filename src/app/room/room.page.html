@@ -4,7 +4,19 @@
     <app-timer-button (start)="onStart($event)" (stop)="onStop($event)"></app-timer-button>
   </div>
 
-  <app-fruit-basket [count]="ownInformation[0]" [content]="ownInformation[1]"></app-fruit-basket>
+  <div>
+    <app-fruit-basket #own></app-fruit-basket>
+  </div>
+
+  <div *ngFor="let mate of mate_list; index as i">
+    <app-fruit-basket #mates [count]="mate.count" [content]="mate.content"></app-fruit-basket>
+  </div>
 
   <ion-button class="ion-padding" color="danger" expand="block" (click)="closeStudy()">退出する</ion-button>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="getInformation()">
+    <ion-fab-button>
+      <ion-icon name="information-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

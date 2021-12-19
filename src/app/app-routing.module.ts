@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'modal-enter',
     loadChildren: () => import('./modals/modal-enter/modal-enter.module').then( m => m.ModalEnterPageModule)
   },
+  {
+    path: 'modal-information',
+    loadChildren: () => import('./modals/modal-information/modal-information.module').then( m => m.ModalInformationPageModule)
+  },
 ];
 
 @NgModule({

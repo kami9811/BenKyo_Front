@@ -1,0 +1,16 @@
+<ion-content>
+  <div class="title">あなたのお菓子</div>
+  <div class="text">{{own_count}}</div>
+
+  <div class="title">みんなのお菓子総数</div>
+  <div class="text">{{all_food}}</div>
+
+  <ng-container *ngIf="flag">
+    <div class="title">みんながやっていること</div>
+    <ng-container *ngFor="let mate of mate_list">
+      <div class="text">{{mate.content}}</div>
+    </ng-container>
+  </ng-container>
+
+  <ion-button class="ion-padding" expand="block" fill="outline" (click)="dismiss()">閉じる</ion-button>
+</ion-content>
