@@ -23,10 +23,10 @@ export class ModalFacegamePage implements OnInit {
 
   face_set: string[] = [
     "angry",
-    "disgusted",
-    "fearful",
+    // "disgusted",
+    // "fearful",
     "happy",
-    "neutral",
+    // "neutral",
     "sad",
     "surprised",
   ]
