@@ -15,6 +15,7 @@ export class ModalFacegamePage implements OnInit {
 
   game_flag: Boolean = false
   clear_flag: Boolean = false
+  checked_value: Number
   score: any = 0
   face_index: number
   quiz: string = ""
@@ -97,7 +98,8 @@ export class ModalFacegamePage implements OnInit {
         detectionsWithExpressions.forEach(
           face => {
             console.log(face["expressions"])
-            if (face["expressions"][this.quiz] > 0.5) {
+            this.checked_value = face["expressions"][this.quiz]
+            if (this.checked_value > 0.4) {
               this.score += 1
               this.clear_flag = true
             }
