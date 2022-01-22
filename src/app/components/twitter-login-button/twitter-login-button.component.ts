@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-twitter-login-button',
@@ -14,45 +15,15 @@ export class TwitterLoginButtonComponent implements OnInit {
     public authentication: AuthenticationService,
     private router: Router,
     private loadingController: LoadingController,
+    private alertController: AlertController,
   ) { }
 
   result: any
   waiting: any
 
   ngOnInit() {
-    this.authentication.checkAuth("login")
     // console.log(this.authentication.getUser())
-    this.loading()
-    
-  }
-
-  login = () => {
-    this.authentication.TwitterAuth()
-
-    // this.authentication.TwitterAuth()
-    // .then((result) => {
-    //   console.log(result)
-    //   this.router.navigate(["home"])
-    // }).catch((error) => {
-    //   console.log(error)
-    // })
-  }
-
-  getAuthRedirectResult = () => {
-    this.authentication.AuthResult()
-    .then((result) => {
-      this.waiting.dismiss()
-      console.log(result)
-      console.log(result["additionalUserInfo"]["profile"]["name"])
-      localStorage.name = result["additionalUserInfo"]["profile"]["name"]
-      console.log(result["additionalUserInfo"]["profile"]["id"])
-      console.log(result["additionalUserInfo"]["profile"]["id_str"])
-      // console.log(result["credential"]["accessToken"])
-      // console.log(result["credential"]["secret"])
-    }).catch((error) => {
-      // this.waiting.dismiss()
-      console.log(error)
-    })
+    this.loading();
   }
 
   loading = async () => {
@@ -62,9 +33,43 @@ export class TwitterLoginButtonComponent implements OnInit {
     })
     await this.waiting.present().then(
       () => {
-        this.getAuthRedirectResult()
+        this.getAuthRedirectResult();
       }
     )
   }
+
+  getAuthRedirectResult = () => {
+    this.authentication.AuthResult()
+    .then(result => {
+      console.log(result);
+      if (result["credential"]) {  // Result is exsisted == logined
+        console.log(result["additionalUserInfo"]["profile"]["name"]);
+        console.log(result["additionalUserInfo"]["profile"]["id"]);
+        console.log(result["additionalUserInfo"]["profile"]["id_str"]);
+
+        localStorage.name = result["additionalUserInfo"]["profile"]["name"];
+        localStorage.accessToken = result["credential"]["accessToken"];
+        localStorage.secret = result["credential"]["secret"];
+        if (result["additionalUserInfo"]["profile"]["protected"] == true) this.alertPrivate();
+        else this.authentication.checkAuth("login");
+      }
+      this.waiting.dismiss();
+    })
+  }
+
+  alertPrivate = async () => {
+    const alert = await this.alertController.create({
+      message: '鍵アカウントではサービスの利用が<br>できません🥺',
+      buttons: [{
+        text: 'OK',
+        handler: () => {
+          this.authentication.AuthLogout();
+        },
+      }]
+    });
+    await alert.present();
+  }
+
+  login = () => this.authentication.TwitterAuth();
 
 }

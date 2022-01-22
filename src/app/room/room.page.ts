@@ -9,7 +9,6 @@ import { TimerButtonComponent } from '../components/timer-button/timer-button.co
 import { FruitBasketComponent } from '../components/fruit-basket/fruit-basket.component';
 import { ModalController } from '@ionic/angular';
 import { ModalInformationPage } from '../modals/modal-information/modal-information.page';
-import { async } from '@angular/core/testing';
 import { ModalFacegamePage } from '../modals/modal-facegame/modal-facegame.page';
 
 @Component({
@@ -83,7 +82,8 @@ export class RoomPage implements OnInit {
     this.gs.httpGet(environment.url + "room/" + this.room_id).subscribe(
       res => {
         console.log(res)
-        if ((res["status"] == 'closed') && (localStorage.room_flag !== 'undefined')) this.closeHistory()
+        // すでに部屋が終わって(closed)いた場合
+        if ((res["status"] == 'closed') && (localStorage.room_flag !== undefined)) this.closeHistory()
 
         // ルームメイトの内容確認
         for (let i = 0; i < res["open"].length; i++) {
@@ -155,6 +155,7 @@ export class RoomPage implements OnInit {
         {
           text: 'OK',
           handler: () => {
+            localStorage.removeItem("room_flag")
             this.router.navigate(['/home'])
           }
         }
@@ -182,7 +183,7 @@ export class RoomPage implements OnInit {
   }
 
   closeRoom = () => {
-    localStorage.room_flag = undefined
+    localStorage.removeItem("room_flag")
     const body = {
       "user_id": localStorage.uid,
       "count": localStorage.count
@@ -193,7 +194,7 @@ export class RoomPage implements OnInit {
   }
 
   closeHistory = () => {
-    localStorage.room_flag = undefined
+    localStorage.removeItem("room_flag")
     const body = {
       "user_id": localStorage.uid,
       "count": localStorage.count
