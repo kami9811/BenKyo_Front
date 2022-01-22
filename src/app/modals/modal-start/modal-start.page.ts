@@ -20,9 +20,11 @@ export class ModalStartPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.content = localStorage.lastContent
   }
 
   postTweet() {
+    localStorage.lastContent = this.content
     const body = {
       "user_id": localStorage.uid,
       "content": this.content

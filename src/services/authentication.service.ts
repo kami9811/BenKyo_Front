@@ -32,7 +32,8 @@ export class AuthenticationService {
     // this.router.navigate(['/login'])
   }
 
-  public checkAuth = (page) => {
+  public checkAuth = (page: string): void => {
+    // `State` が `Changed` のときにのみ駆動する可能性あり
     this.afAuth.onAuthStateChanged(((user) => {
       if (user) {
         // Already signed in.

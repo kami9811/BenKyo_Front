@@ -40,7 +40,7 @@ export class ModalEnterPage implements OnInit {
   }
 
   dismiss = () => {
-    localStorage.room_flag = undefined
+    localStorage.removeItem("room_flag")
     this.modalController.dismiss()
     this.router.navigate(['/home'])
   }
