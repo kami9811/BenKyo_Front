@@ -1,0 +1,23 @@
+<ion-content>
+  <div class="container ion-padding">
+    <ng-container *ngIf="exist_flag">
+      <div class="ion-padding">
+        1. {{content_1}}
+      </div>
+      <div class="ion-padding">
+        2. {{content_2}}
+      </div>
+      <div class="ion-padding">
+        3. {{content_3}}
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!exist_flag">
+      まだ誰とも<br>勉強していません…🥺
+    </ng-container>
+  </div>
+  
+
+  <div class="button-container">
+    <ion-button class="ion-padding-vertical" expand="block" fill="outline" (click)="dismiss()">閉じる</ion-button>
+  </div>
+</ion-content>

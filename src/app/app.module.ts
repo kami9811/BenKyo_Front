@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireModule } from '@angular/fire/compat';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +30,7 @@ import { AngularFireModule } from '@angular/fire/compat';
     HttpClientModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    BrowserAnimationsModule,
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

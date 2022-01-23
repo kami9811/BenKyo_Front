@@ -10,6 +10,9 @@ import { FruitBasketComponent } from '../components/fruit-basket/fruit-basket.co
 import { ModalController } from '@ionic/angular';
 import { ModalInformationPage } from '../modals/modal-information/modal-information.page';
 import { ModalFacegamePage } from '../modals/modal-facegame/modal-facegame.page';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarGettingLikeComponent } from '../components/snackbar-getting-like/snackbar-getting-like.component';
+import mojs from '@mojs/core';
 
 @Component({
   selector: 'app-room',
@@ -47,6 +50,7 @@ export class RoomPage implements OnInit {
     private alertController: AlertController,
     private router: Router,
     private modalController: ModalController,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -71,11 +75,37 @@ export class RoomPage implements OnInit {
           this.checkRoomMate()
         }
       )
-
+      this.gs.httpGet(environment.url + "tweet/" + localStorage.tweet_id).subscribe(
+        res => {
+          if (parseInt(localStorage.likeCount) < res["data"]["public_metrics"]["like_count"]) {
+            this.snackBar.openFromComponent(SnackbarGettingLikeComponent, {
+              duration: 2000,
+            });
+            this.getEffect();
+            localStorage.likeCount = res["data"]["public_metrics"]["like_count"]
+          }
+        }
+      )
     }, 5000)
   }
   ionViewDidLeave = () => {
     clearInterval(this.syn_interval)
+  }
+
+  getEffect = () => {
+    const burst = new mojs.Burst({
+      radius:   { 0: 100 },
+      count:    50,
+      children: {
+        shape:      'polygon',
+        points:     5,
+        // fill:       { 'cyan' : 'yellow' },
+        rotate:      { 360: 0 },
+        duration:   3000,
+        delay:      'stagger( rand(0, 200) )'
+      }
+    });
+    burst.replay();
   }
 
   checkRoomMate = () => {

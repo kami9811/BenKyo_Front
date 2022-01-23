@@ -9,6 +9,7 @@ import { RoomPageRoutingModule } from './room-routing.module';
 import { RoomPage } from './room.page';
 
 import { ComponentsModule } from '../components/components.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ComponentsModule } from '../components/components.module';
     FormsModule,
     IonicModule,
     RoomPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    MatSnackBarModule,
   ],
   declarations: [RoomPage]
 })
