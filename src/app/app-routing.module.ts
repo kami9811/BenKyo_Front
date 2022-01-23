@@ -39,6 +39,10 @@ const routes: Routes = [
     path: 'facegame',
     loadChildren: () => import('./facegame/facegame.module').then( m => m.FacegamePageModule)
   },
+  {
+    path: 'modal-recommend',
+    loadChildren: () => import('./modals/modal-recommend/modal-recommend.module').then( m => m.ModalRecommendPageModule)
+  },
 ];
 
 @NgModule({

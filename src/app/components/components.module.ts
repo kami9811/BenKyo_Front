@@ -11,6 +11,7 @@ import { TimerComponent } from './timer/timer.component';
 import { TimerButtonComponent } from './timer-button/timer-button.component';
 import { FruitBasketComponent } from './fruit-basket/fruit-basket.component';
 import { PopoverHintComponent } from './popover-hint/popover-hint.component';
+import { SnackbarGettingLikeComponent } from './snackbar-getting-like/snackbar-getting-like.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { PopoverHintComponent } from './popover-hint/popover-hint.component';
     TimerButtonComponent,
     FruitBasketComponent,
     PopoverHintComponent,
+    SnackbarGettingLikeComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +36,7 @@ import { PopoverHintComponent } from './popover-hint/popover-hint.component';
     TimerButtonComponent,
     FruitBasketComponent,
     PopoverHintComponent,
+    SnackbarGettingLikeComponent,
   ],
 })
 export class ComponentsModule { }

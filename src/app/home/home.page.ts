@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { ModalStartPage } from '../modals/modal-start/modal-start.page';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/services/authentication.service';
+import { ModalRecommendPage } from '../modals/modal-recommend/modal-recommend.page';
 
 @Component({
   selector: 'app-home',
@@ -31,6 +32,14 @@ export class HomePage {
   openModal = async() => {
     const modal = await this.modalController.create({
       component: ModalStartPage,
+      componentProps: {}
+    });
+    await modal.present();
+  }
+
+  openRecommendModal = async() => {
+    const modal = await this.modalController.create({
+      component: ModalRecommendPage,
       componentProps: {}
     });
     await modal.present();
